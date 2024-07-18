@@ -1,7 +1,6 @@
 import streamlit as st # python framework used to create web apps
 from datetime import date
 
-import pandas as pd
 import yfinance as yf # python library to fetch financial data from Yahoo Finance
 from prophet import Prophet # prophet module for time series forecasting
 from prophet.plot import plot_plotly # module to visualize Prophet forecasts using Plotly
