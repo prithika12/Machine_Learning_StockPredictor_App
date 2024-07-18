@@ -9,8 +9,6 @@ from plotly import graph_objs as go # library as go to create interactive graphs
 
 import requests #library to handle http requests 
 from io import StringIO # Library to handle string input/output
-import random
-
 
 START = "2012-01-01" #data starting from this date
 TODAY = date.today().strftime("%Y-%m-%d") #data upto today
@@ -40,14 +38,6 @@ def get_sp500_tickers():
    sp500 = pd.read_html(StringIO(html)) # Use pandas to read the HTML content and convert it into a list of DataFrames
    tickers = sp500[0]['Symbol'].tolist() # Extract the 'Symbol' column from the first DataFrame and convert it to a list
    return tickers
-
-# Function to fetch random news from Yahoo Finance
-def fetch_random_stock_news():
-    stocks = get_sp500_tickers()
-    random_symbol = random.choice(stocks)
-    company = yf.Ticker(random_symbol)
-    news = company.news
-    return news
 
 # Function to fetch news from Yahoo Finance
 def fetch_stock_news(symbol):

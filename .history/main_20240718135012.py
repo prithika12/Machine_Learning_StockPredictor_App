@@ -66,14 +66,19 @@ st.sidebar.markdown("<h1 style='font-size: 36px;'>Stock News</h1>", unsafe_allow
 # You can create multiple containers using Streamlit's columns
 col1, col2 = st.sidebar.columns(2)
 
+# Container 1 - News Container 1
+with col1.expander("News Container 1", expanded=True):
+    news1 = fetch_random_stock_news()
+    for i, item in enumerate(news1[:5]):  # Displaying the first 5 news items
+        st.markdown(f"**{item['published_at']}** - {item['title']}")
+        st.write(item['summary'])
 
-# Container 1
-with st.sidebar.expander("News Container 1", expanded=True):
-    st.write("News content goes here...")
-
-# Container 2
-with st.sidebar.expander("News Container 2", expanded=True):
-    st.write("More news content goes here...")
+# Container 2 - News Container 2
+with col2.expander("News Container 2", expanded=True):
+    news2 = fetch_random_stock_news()
+    for i, item in enumerate(news2[:5]):  # Displaying the first 5 news items
+        st.markdown(f"**{item['published_at']}** - {item['title']}")
+        st.write(item['summary'])
 
 st.title("Stock Prediction App")
 

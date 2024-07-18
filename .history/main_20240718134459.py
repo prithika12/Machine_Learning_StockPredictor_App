@@ -9,8 +9,6 @@ from plotly import graph_objs as go # library as go to create interactive graphs
 
 import requests #library to handle http requests 
 from io import StringIO # Library to handle string input/output
-import random
-
 
 START = "2012-01-01" #data starting from this date
 TODAY = date.today().strftime("%Y-%m-%d") #data upto today
@@ -41,14 +39,6 @@ def get_sp500_tickers():
    tickers = sp500[0]['Symbol'].tolist() # Extract the 'Symbol' column from the first DataFrame and convert it to a list
    return tickers
 
-# Function to fetch random news from Yahoo Finance
-def fetch_random_stock_news():
-    stocks = get_sp500_tickers()
-    random_symbol = random.choice(stocks)
-    company = yf.Ticker(random_symbol)
-    news = company.news
-    return news
-
 # Function to fetch news from Yahoo Finance
 def fetch_stock_news(symbol):
     company = yf.Ticker(symbol)
@@ -66,14 +56,24 @@ st.sidebar.markdown("<h1 style='font-size: 36px;'>Stock News</h1>", unsafe_allow
 # You can create multiple containers using Streamlit's columns
 col1, col2 = st.sidebar.columns(2)
 
+# Container 1 - News Container 1
+with col1.expander("News Container 1", expanded=True):
+    selected_symbol1 = st.selectbox('Select stock symbol', stocks)
+    if selected_symbol1 != "Choose an option":
+        news1 = fetch_stock_news(selected_symbol1)
+        for i, item in enumerate(news1[:5]):  # Displaying the first 5 news items
+            st.markdown(f"**{item['publishedDate']}** - {item['title']}")
+            st.write(item['summary'])
 
-# Container 1
-with st.sidebar.expander("News Container 1", expanded=True):
-    st.write("News content goes here...")
+# Container 2 - News Container 2
+with col2.expander("News Container 2", expanded=True):
+    selected_symbol2 = st.selectbox('Select stock symbol', stocks)
+    if selected_symbol2 != "Choose an option":
+        news2 = fetch_stock_news(selected_symbol2)
+        for i, item in enumerate(news2[:5]):  # Displaying the first 5 news items
+            st.markdown(f"**{item['publishedDate']}** - {item['title']}")
+            st.write(item['summary'])
 
-# Container 2
-with st.sidebar.expander("News Container 2", expanded=True):
-    st.write("More news content goes here...")
 
 st.title("Stock Prediction App")
 
