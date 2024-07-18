@@ -29,7 +29,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
 # Function to get the list of stock symbols
 @st.cache_data
 def get_sp500_tickers():
@@ -43,8 +42,18 @@ def get_sp500_tickers():
 stocks = get_sp500_tickers()
 stocks.insert(0, "Choose an option") # Add a placeholder option
 
-# New Feature: Additional Information boxes/containers on the right side
-st.sidebar.markdown("<h1 style='font-size: 36px;'>Stock News</h1>", unsafe_allow_html=True)
+# Function to fetch stock news from Yahoo Finance
+@st.cache(suppress_st_warning=True)
+def fetch_stock_news(symbol):
+    url = f"https://finance.yahoo.com/quote/{symbol}?p={symbol}&.tsrc=fin-srch"
+    r = requests.get(url)
+    news = []
+    if r.status_code == 200:
+        news.append(r.text)
+    return news
+
+st.sidebar.markdown("<h1>Stock News</h1>", unsafe_allow_html=True)
+
 
 st.title("Stock Prediction App")
 

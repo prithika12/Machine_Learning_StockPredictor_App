@@ -29,7 +29,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
 # Function to get the list of stock symbols
 @st.cache_data
 def get_sp500_tickers():
@@ -43,8 +42,25 @@ def get_sp500_tickers():
 stocks = get_sp500_tickers()
 stocks.insert(0, "Choose an option") # Add a placeholder option
 
-# New Feature: Additional Information boxes/containers on the right side
-st.sidebar.markdown("<h1 style='font-size: 36px;'>Stock News</h1>", unsafe_allow_html=True)
+# Sidebar for additional information
+st.sidebar.markdown("<h2>Additional Information</h2>", unsafe_allow_html=True)
+
+# Text content for each container
+container_texts = [
+    "This is an important note regarding financial decisions.",
+    "Be cautious with your stock predictions.",
+    "Your predictions are ready.",
+    "Here's some additional information.",
+    "Pay attention to the stock trends."
+]
+
+# Loop through containers and display them in the sidebar
+for text in container_texts:
+    st.sidebar.markdown(f"""
+        <div class='custom-container'>
+            <p>{text}</p>
+        </div>
+    """, unsafe_allow_html=True)
 
 st.title("Stock Prediction App")
 
