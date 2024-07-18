@@ -27,7 +27,7 @@ stocks = get_sp500_tickers()
 
 st.title("Stock Prediction App")
 
-# Dropdown selection box for choosing a stock symbol
+
 selected_stock = st.selectbox('Select dataset for prediction', stocks)
 
 n_years = st.slider('Years of prediction:', 1, 4)

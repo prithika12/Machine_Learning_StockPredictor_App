@@ -18,8 +18,8 @@ TODAY = date.today().strftime("%Y-%m-%d") #data upto today
 def get_sp500_tickers():
    url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
    html = requests.get(url).text # Send an HTTP GET request to the URL and retrieve the HTML content as a string
-   sp500 = pd.read_html(StringIO(html)) # Use pandas to read the HTML content and convert it into a list of DataFrames
-   tickers = sp500[0]['Symbol'].tolist() # Extract the 'Symbol' column from the first DataFrame and convert it to a list
+   sp500 = pd.read_html(StringIO(html))
+   tickers = sp500[0]['Symbol'].tolist()
    return tickers
 
 # Fetch the list of stock symbols
@@ -27,7 +27,7 @@ stocks = get_sp500_tickers()
 
 st.title("Stock Prediction App")
 
-# Dropdown selection box for choosing a stock symbol
+
 selected_stock = st.selectbox('Select dataset for prediction', stocks)
 
 n_years = st.slider('Years of prediction:', 1, 4)
