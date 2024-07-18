@@ -20,9 +20,10 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
         .main .block-container {
-            max-width: 1500px;
+            max-width: 1000px;
+            font-size: large;
             margin-top: 50px;
-            margin-left: 50px;
+            margin-left: 100px;
             margin-right: auto;
             padding: 2rem;
         }
@@ -43,7 +44,7 @@ stocks = get_sp500_tickers()
 stocks.insert(0, "Choose an option") # Add a placeholder option
 
 # New Feature: Additional Information boxes/containers on the right side
-st.sidebar.markdown("<h1>Stock News</h1>", unsafe_allow_html=True)
+st.sidebar.markdown("<h2>Additional Information</h2>", unsafe_allow_html=True)
 st.sidebar.info("Here's some additional information.")
 st.sidebar.warning("Be cautious with financial decisions.")
 st.sidebar.success("Your predictions are ready.")

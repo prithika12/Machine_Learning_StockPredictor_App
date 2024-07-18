@@ -20,9 +20,9 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
         .main .block-container {
-            max-width: 1500px;
+            max-width: 1000px;
             margin-top: 50px;
-            margin-left: 50px;
+            margin-left: 100px;
             margin-right: auto;
             padding: 2rem;
         }

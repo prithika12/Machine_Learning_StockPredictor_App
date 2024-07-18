@@ -20,9 +20,9 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
         .main .block-container {
-            max-width: 1500px;
+            max-width: 1000px;
             margin-top: 50px;
-            margin-left: 50px;
+            margin-left: 200px;
             margin-right: auto;
             padding: 2rem;
         }
@@ -41,12 +41,6 @@ def get_sp500_tickers():
 # Fetch the list of stock symbols
 stocks = get_sp500_tickers()
 stocks.insert(0, "Choose an option") # Add a placeholder option
-
-# New Feature: Additional Information boxes/containers on the right side
-st.sidebar.markdown("<h1>Stock News</h1>", unsafe_allow_html=True)
-st.sidebar.info("Here's some additional information.")
-st.sidebar.warning("Be cautious with financial decisions.")
-st.sidebar.success("Your predictions are ready.")
 
 st.title("Stock Prediction App")
 
@@ -102,6 +96,20 @@ if selected_stock != "Choose an option":
     st.write("Forecast components")
     fig2 = m.plot_components(forecast)
     st.write(fig2)
+
+     # New Feature: Add boxes/containers below each other on the right side
+    st.markdown("<br>", unsafe_allow_html=True)  # Add some space
+    st.markdown("<h2>Additional Information</h2>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)  # Add some space
+
+    st.info("Here's some additional information.")
+    st.markdown("<br>", unsafe_allow_html=True)  # Add some space
+
+    st.warning("Be cautious with financial decisions.")
+    st.markdown("<br>", unsafe_allow_html=True)  # Add some space
+
+    st.success("Your predictions are ready!")
+    st.markdown("<br>", unsafe_allow_html=True)  # Add some space
 
 else:
     st.write("Please select a stock symbol to see the prediction.")

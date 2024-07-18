@@ -13,22 +13,6 @@ from io import StringIO # Library to handle string input/output
 START = "2012-01-01" #data starting from this date
 TODAY = date.today().strftime("%Y-%m-%d") #data upto today
 
-# Set page configuration to apply custom CSS
-st.set_page_config(layout="wide")
-
-# Apply custom CSS to align content to the left
-st.markdown("""
-    <style>
-        .main .block-container {
-            max-width: 1500px;
-            margin-top: 50px;
-            margin-left: 50px;
-            margin-right: auto;
-            padding: 2rem;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 # Function to get the list of stock symbols
 @st.cache_data
 def get_sp500_tickers():
@@ -41,12 +25,6 @@ def get_sp500_tickers():
 # Fetch the list of stock symbols
 stocks = get_sp500_tickers()
 stocks.insert(0, "Choose an option") # Add a placeholder option
-
-# New Feature: Additional Information boxes/containers on the right side
-st.sidebar.markdown("<h1>Stock News</h1>", unsafe_allow_html=True)
-st.sidebar.info("Here's some additional information.")
-st.sidebar.warning("Be cautious with financial decisions.")
-st.sidebar.success("Your predictions are ready.")
 
 st.title("Stock Prediction App")
 
