@@ -1,18 +1,17 @@
-import streamlit as st # python framework used to create web apps
+import streamlit as st
 from datetime import date
-import pandas as pd #library for data analysis and manipulation
+import pandas as pd
+import yfinance as yf
+from prophet import Prophet
+from prophet.plot import plot_plotly
+from plotly import graph_objs as go
+import requests
+from io import StringIO
+import feedparser
+import os
 
-import yfinance as yf # python library to fetch financial data from Yahoo Finance
-from prophet import Prophet # prophet module for time series forecasting
-from prophet.plot import plot_plotly # module to visualize Prophet forecasts using Plotly
-from plotly import graph_objs as go # library as go to create interactive graphs
-
-import requests #library to handle http requests 
-from io import StringIO # Library to handle string input/output
-
-
-START = "2012-01-01" #data starting from this date
-TODAY = date.today().strftime("%Y-%m-%d") #data upto today
+START = "2012-01-01"
+TODAY = date.today().strftime("%Y-%m-%d")
 
 # Set page configuration to apply custom CSS
 st.set_page_config(layout="wide")
@@ -30,19 +29,36 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
 # Function to get the list of stock symbols
 @st.cache_data
 def get_sp500_tickers():
-   url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
-   html = requests.get(url).text # Send an HTTP GET request to the URL and retrieve the HTML content as a string
-   sp500 = pd.read_html(StringIO(html)) # Use pandas to read the HTML content and convert it into a list of DataFrames
-   tickers = sp500[0]['Symbol'].tolist() # Extract the 'Symbol' column from the first DataFrame and convert it to a list
-   return tickers
+    url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+    html = requests.get(url).text
+    sp500 = pd.read_html(StringIO(html))
+    tickers = sp500[0]['Symbol'].tolist()
+    return tickers
+
+# Function to fetch and parse RSS feed from Yahoo Finance
+def fetch_yahoo_finance_news():
+    feed_url = "https://finance.yahoo.com/rss/"
+    feed = feedparser.parse(feed_url)
+    return feed.entries
+
+# Function to get images from a local folder
+def get_local_images():
+    images = []
+    images_folder = 'images'  # Folder containing your images
+    for i in range(1, 11):  # Assuming you have image_1 to image_10
+        img_path = os.path.join(images_folder, f'image_{i}.jpg')  # Update extension if needed
+        if os.path.exists(img_path):
+            images.append(img_path)
+        else:
+            images.append('https://via.placeholder.com/150')  # Placeholder if local image is not found
+    return images
 
 # Fetch the list of stock symbols
 stocks = get_sp500_tickers()
-stocks.insert(0, "Choose an option") # Add a placeholder option
+stocks.insert(0, "Choose an option")
 
 # New Feature: Additional Information boxes/containers on the right side
 st.sidebar.markdown("<h1 style='font-size: 36px;'>Stock News</h1>", unsafe_allow_html=True)
@@ -50,13 +66,19 @@ st.sidebar.markdown("<h1 style='font-size: 36px;'>Stock News</h1>", unsafe_allow
 # You can create multiple containers using Streamlit's columns
 col1, col2 = st.sidebar.columns(2)
 
-# Container 1
-with st.sidebar.expander("News Container 1", expanded=True):
-    st.write("News content goes here...")
+# Container 1 - Yahoo Finance News
+with col1:
+    st.sidebar.expander("Yahoo Finance", expanded=True)
+    yahoo_news = fetch_yahoo_finance_news()
+    images = get_local_images()
+    for i, entry in enumerate(yahoo_news[:5]):  # Display the top 5 news articles
+        st.sidebar.image(images[i], use_column_width=True)
+        st.sidebar.write(f"**[{entry.title}]({entry.link})**")
 
-# Container 2
-with st.sidebar.expander("News Container 2", expanded=True):
-    st.write("More news content goes here...")
+# # Container 2 - Placeholder for other news
+# with col2:
+#     with st.sidebar.expander("Other News", expanded=True):
+#         st.write("More news content goes here...")
 
 st.title("Stock Prediction App")
 
@@ -74,7 +96,6 @@ if selected_stock != "Choose an option":
         data.reset_index(inplace=True)
         return data
 
-        
     data_load_state = st.text('Loading data...')
     data = load_data(selected_stock)
     data_load_state.text('Loading data... done!')
@@ -92,8 +113,8 @@ if selected_stock != "Choose an option":
         
     plot_raw_data()
 
-    # Predict forecast with Prophet.
-    df_train = data[['Date','Close']]
+    # Predict forecast with Prophet
+    df_train = data[['Date', 'Close']]
     df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
     m = Prophet()
@@ -112,4 +133,3 @@ if selected_stock != "Choose an option":
     st.write("Forecast components")
     fig2 = m.plot_components(forecast)
     st.write(fig2)
-
