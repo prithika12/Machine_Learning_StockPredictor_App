@@ -113,3 +113,5 @@ if selected_stock != "Choose an option":
     fig2 = m.plot_components(forecast)
     st.write(fig2)
 
+else:
+    st.write("Please select a stock symbol to see the prediction.")

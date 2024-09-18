@@ -60,8 +60,8 @@ with st.sidebar.expander("News Container 2", expanded=True):
 
 st.title("Stock Prediction App")
 
-# Dropdown selection box for choosing a stock symbol
-selected_stock = st.selectbox('Select dataset for prediction', stocks)
+# # Dropdown selection box for choosing a stock symbol
+# selected_stock = st.selectbox('Select dataset for prediction', stocks)
 
 # Check if a valid stock symbol is selected
 if selected_stock != "Choose an option":
@@ -113,3 +113,5 @@ if selected_stock != "Choose an option":
     fig2 = m.plot_components(forecast)
     st.write(fig2)
 
+else:
+    st.write("Please select a stock symbol to see the prediction.")

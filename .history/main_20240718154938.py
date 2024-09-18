@@ -61,7 +61,7 @@ with st.sidebar.expander("News Container 2", expanded=True):
 st.title("Stock Prediction App")
 
 # Dropdown selection box for choosing a stock symbol
-selected_stock = st.selectbox('Select dataset for prediction', stocks)
+selected_stock = st.selectbox("<h1>'Select dataset for prediction'</h1>", stocks)
 
 # Check if a valid stock symbol is selected
 if selected_stock != "Choose an option":
