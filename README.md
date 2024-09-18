@@ -1,0 +1,80 @@
+# Stock Prediction App
+
+This is a stock prediction web application that uses machine learning to forecast stock prices of S&P 500 companies. Built using Python, the app provides an intuitive interface for selecting stocks and predicting prices for up to 4 years using the Prophet forecasting model.
+
+## Features
+- **Stock Selection**: Choose from S&P 500 companies for prediction.
+- **Historical Data**: Visualize raw stock data (Open and Close prices).
+- **Forecasting**: Predict future stock prices for up to 4 years using the Prophet model.
+- **Interactive Charts**: View interactive charts with time series data and forecast results.
+- **Sidebar Information**: Placeholder for stock news containers.
+
+## Tech Stack
+- **Python 3.x**
+- **Streamlit**: Web framework for building data-driven applications.
+- **yFinance**: Fetch stock data from Yahoo Finance.
+- **Prophet**: Forecasting library for time series prediction.
+- **Plotly**: Create interactive plots and charts.
+
+## Installation
+
+### Prerequisites
+- Python 3.x installed on your system
+- pip (Python package installer)
+
+### Steps
+
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/stock-prediction-app.git
+    ```
+
+2. **Navigate to the project directory**:
+    ```bash
+    cd stock-prediction-app
+    ```
+
+3. **Set up a virtual environment**:
+    ```bash
+    python3 -m venv stock_prediction_env
+    source stock_prediction_env/bin/activate  # On Windows use: stock_prediction_env\Scripts\activate
+    ```
+
+4. **Upgrade pip**:
+    ```bash
+    pip install --upgrade pip
+    ```
+
+5. **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Dependencies
+- `streamlit`
+- `yfinance`
+- `plotly`
+- `prophet`
+- `pystan`
+- `cython`
+- `numpy`
+
+You can install these using:
+```bash
+pip install streamlit yfinance plotly prophet cython numpy pystan
+```
+
+## Running the App
+
+1. **Activate the virtual environment**:
+    ```bash
+    source stock_prediction_env/bin/activate  # On Windows use: stock_prediction_env\Scripts\activate
+    ```
+
+2. **Run the app using Streamlit**:
+    ```bash
+    streamlit run app.py
+    ```
+
+3. **Access the app**: 
+   Open your browser and access the localhost 
